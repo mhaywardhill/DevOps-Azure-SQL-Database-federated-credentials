@@ -33,3 +33,7 @@ GO
 ALTER ROLE db_owner ADD MEMBER [<display name of App registration>];
 GO
 ```
+
+* Create the variables in the pipeline:
+
+![Pipeline variables](/screenshots/pipeline_variables.png)
