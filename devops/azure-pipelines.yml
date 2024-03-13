@@ -26,3 +26,12 @@ stages:
           }
           
           write-host "##vso[task.setvariable variable=SPToken]$tokenResponse"
+
+    - task: AzurePowerShell@5
+      displayName: 'execute SQL statement'
+      inputs:
+        azureSubscription: 'azure_connection'
+        azurePowerShellVersion: 'LatestVersion'
+        ScriptType: InlineScript
+        Inline: |
+          Invoke-Sqlcmd -ServerInstance $(SQLDatabase) -Database 'AdventureWorksLT' -AccessToken $(SPToken) -query 'SELECT LEFT(SUSER_NAME(),5) as "whoisthis", [name] as "table name" FROM sys.tables;'
