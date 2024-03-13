@@ -1,0 +1,14 @@
+trigger:
+- none
+
+variables:
+- name: vmImageName
+  value: 'windows-2022' 
+
+stages:
+- stage: Build
+  displayName: Build
+  jobs:
+  - job: dacpac
+    pool:
+      vmImage: $(vmImageName)
