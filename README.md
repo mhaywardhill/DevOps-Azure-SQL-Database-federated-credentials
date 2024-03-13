@@ -1,4 +1,4 @@
-## Project: Read from Azure SQL Database from DevOps using federated-credentials
+## Project: Read from Azure SQL Database from DevOps using federated credentials
 
 **Project Description**: This project will read from a table in SQL Database, connecting using a token for federated credentials.
 
@@ -18,3 +18,18 @@ This creates App registration with Federated credentials. Please note this is a 
 
 ![Create service connection 2](/screenshots/Create_service_connection_3.png)
 
+* Add App registration as a login and user in the SQL Database:
+
+```
+-- in master database
+CREATE LOGIN [<display name of App registration>]  FROM EXTERNAL PROVIDER;
+GO
+CREATE USER [<display name of App registration>]  FROM LOGIN [<display name of App registration>];
+GO
+
+-- in user database
+CREATE USER [<display name of App registration>]  FROM LOGIN [<display name of App registration>];
+GO
+ALTER ROLE db_owner ADD MEMBER [<display name of App registration>];
+GO
+```
