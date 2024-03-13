@@ -1,0 +1,1 @@
+# DevOps-Azure-SQL-Database-federated-credentials
