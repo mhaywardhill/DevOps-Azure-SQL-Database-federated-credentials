@@ -1,14 +1,28 @@
 trigger:
 - none
-
 variables:
 - name: vmImageName
   value: 'windows-2022' 
-
 stages:
 - stage: Build
   displayName: Build
   jobs:
-  - job: dacpac
+  - job: repro
     pool:
       vmImage: $(vmImageName)
+    steps:
+    - task: AzurePowerShell@5
+      displayName: 'Generate SQLAccessToken'
+      inputs:
+        azureSubscription: 'azure_connection'
+        azurePowerShellVersion: 'LatestVersion'
+        ScriptType: InlineScript
+        Inline: |
+          $tokenResponse = (Get-AzAccessToken -ResourceUrl https://database.windows.net).Token
+          
+          if ($tokenResponse) {
+            Write-debug "Access token type is $($tokenResponse.token_type), expires $($tokenResponse.expires_on)"
+            $Token = $tokenResponse.access_token
+          }
+          
+          write-host "##vso[task.setvariable variable=SPToken]$tokenResponse"
