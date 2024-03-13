@@ -18,7 +18,11 @@ This creates App registration with Federated credentials. Please note this is a 
 
 ![Create service connection 2](/screenshots/Create_service_connection_3.png)
 
-* Add App registration as a login and user in the SQL Database:
+* Create the variables in the pipeline:
+
+![Pipeline variables](/screenshots/pipeline_variables.png)
+
+## Add App registration to the SQL Database:
 
 ```
 -- in master database
@@ -33,7 +37,3 @@ GO
 ALTER ROLE db_owner ADD MEMBER [<display name of App registration>];
 GO
 ```
-
-* Create the variables in the pipeline:
-
-![Pipeline variables](/screenshots/pipeline_variables.png)
